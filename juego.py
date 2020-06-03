@@ -22,7 +22,7 @@ class Game: #Clase juego
         else:
             self.Jug2Movs = True #Si no fue porque se movió el jugador 2
 
-    def conectado(self):  #Regresa si hubo conexion y esta todo listo
+    def conectado(self):  #Regresa si hubo conexion y esta listo
         return self.listo
 
     def ambosMovieron(self): #Ambos movieron
@@ -44,7 +44,7 @@ class Game: #Clase juego
             ganador = 1 #asigna al jugador 2 como ganador
         elif j1 == "T" and j2 == "P":    #Si jugador 1 elije Roca y jugador 2 elije Tijeras  R=roca, T=tijeras
             ganador = 0 #asigna al jugador 1 como ganador
-        elif j1 == "P" and j2 == "T":    #Si jugador 1 elije Roca y jugador 2 elije Tijeras  R=roca, T=tijeras
+        elif j1 == "P" and j2 == "T":    #Si jugador 1 elije piedra y jugador 2 elije Tijeras  R=roca, T=tijeras
             ganador = 1 #asigna al jugador 2 como ganador
 
         return ganador #Regresa quien ganó la partida

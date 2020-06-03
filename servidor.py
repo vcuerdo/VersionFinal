@@ -6,7 +6,7 @@ import pickle
 from juego import Game
 
 #Nombre de nuestro servidor local o global, y eleccion de un puerto para realizar esta conexion
-servidor = "192.168.0.16"
+servidor= socket.gethostbyname(socket.gethostname())
 puerto = 5555
 #Asignamos el metodo socket de conexion a una varibale, es muy util para reducir codigo
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
