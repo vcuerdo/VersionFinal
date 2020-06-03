@@ -7,7 +7,7 @@ import pygame
 from conexion import Network #Llamamos una clase que esta presente en un python file, usando el formato: from( python file) import (que clase)
 import pickle
 pygame.font.init() #inicializamos el paquete de fuentes de escritura disponible en el modulo pygame
-
+indicadores = [0,0,0]
 width = 700 #Definimos la variable ancho
 height = 700 #Definimos la variable alto
 ventana = pygame.display.set_mode((width, height)) #Creamos una ventana en python usando las herramientas del modulo pygame (lo equivalente a un frame en java)
@@ -22,6 +22,7 @@ class Boton: #Creamos la clase botón
         self.color = color
         self.width = 150  #Asignamos el tamaño de los botones
         self.height = 100
+        self.indicadores = [0,0,0] #0: victorias, 1: empates, 2: derrotas
 
     def pintar(self, win):  #Definimos un metodo pintar(dibujar) que tiene como parametro la ventana del juego
         pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.height)) #Dibujamos un rectangulo dentro de ese frame que creamos
@@ -51,10 +52,12 @@ def repintarVentana(win, game, p): #Metodo repintar ventana que recibe la ventan
         font = pygame.font.SysFont("comicsans", 60) #Si por el contrario hubo conexión, creo la fuente x de tamaño x
         text = font.render("TÚ", 1, (0, 255,255))  #Asigno una especie de titulo a cada jugador
         win.blit(text, (80, 200))  #Ubicacion
-
+        aux = "G/E/D = " + str(int(indicadores[0])) + "/" + str(int(indicadores[1])) + "/" + str(
+        int(indicadores[2]))  # ganados, empates, derrotas
+        GED = font.render(aux,1,(0,255,255))
         text = font.render("OPONENTE", 1, (0, 255, 255))  #Asigno una especie de titulo a cada jugador
         win.blit(text, (380, 200)) #Ubicacion
-
+        win.blit(GED,(10,10))
         move1 = game.get_mov_jugador(0) #Definimos los movimientos de cada jugador
         move2 = game.get_mov_jugador(1) #Definimos los movimientos de cada jugador
         if game.ambosMovieron(): # Si ambos jugadores se movieron
@@ -118,10 +121,13 @@ def main():
             font = pygame.font.SysFont("comicsans", 90)
             if (game.ganador() == 1 and player == 1) or (game.ganador() == 0 and player == 0):  #Simple condicional para asignar texto de quien ganó, empató o perdió
                 text = font.render("GANO!", 1, (255,0,0)) #Los parentesis asignan su color
+                indicadores[0] = indicadores[0] + 1
             elif game.ganador() == -1:
                 text = font.render("EMPATE!", 1, (255,0,0))  #Los parentesis asignan su color
+                indicadores[1] = indicadores[1] + 1
             else:
                 text = font.render("DERROTA...", 1, (255, 0, 0)) #Los parentesis asignan su color
+                indicadores[2] = indicadores[2] + 1
 
             ventana.blit(text, (width / 2 - text.get_width() / 2, height / 2 - text.get_height() / 2))  #La ubicacion en la pantalla
             pygame.display.update() #Actualiza
